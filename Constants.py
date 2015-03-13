@@ -1,0 +1,8 @@
+__author__ = 'Scott'
+
+SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 1280
+
+SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
+GAME_CAPTION = "Project Infinity"
+
