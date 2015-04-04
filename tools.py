@@ -1,39 +1,72 @@
 __author__ = 'Scott'
-import os
+
 import pygame
-
-class GameControl(object):
-    def __init__(self):
-        self.fps = 60
-        self.title = "Project Infinity"
-        self.key = pygame.key.get_pressed()
+import pygame.mixer
+import sys
+import os
 
 
-def load_graphics(directory):
-    graphics = {}
-    for pic in os.listdir(directory):
-        name, ext = os.path.splitext(pic)
-        image = pygame.image.load(os.path.join(directory, pic))
-        if image.get_alpha():
-            image = image.convert_alpha()
-        else:
-            image = image.convert()
-            image.set_colorkey(255, 0, 255)
-        graphics[name] = image
-    return graphics
+#load image
+def load_image(filename):
+    pathName = os.path.join('resources/images', filename)
+    image = pygame.image.load(pathName)
+    if image.get_alpha() is None:
+        image = image.convert()
+    else:
+        image = image.convert_alpha()
+    return image
 
 
-def load_music(directory):
-    music = {}
-    for songs in os.listdir(directory):
-        name, ext = os.path.splitext(songs)
-        music[name] = os.path.join(directory, songs)
-    return music
+#load audio
+def load_audio(filename):
+    pathName = os.path.join('resources/audio', filename)
+    sound = pygame.mixer.Sound(pathName)
+    return sound
 
 
-def load_soundfx(directory):
-    soundfx = {}
-    for sounds in os.listdir(directory):
-        name, ext = os.path.splitext(sounds)
-        soundfx[name] = os.path.join(directory, sounds)
-    return soundfx
+#Gradient function from pygame wiki
+def fill_gradient(surface, color, gradient, rect=None, vertical=True, forward=True):
+    """fill a surface with a gradient pattern
+    Parameters:
+    color -> starting color
+    gradient -> final color
+    rect -> area to fill; default is surface's rect
+    vertical -> True=vertical; False=horizontal
+    forward -> True=forward; False=reverse
+
+    Pygame recipe: http://www.pygame.org/wiki/GradientCode
+    """
+    if rect is None:
+        rect = surface.get_rect()
+    x1, x2 = rect.left, rect.right
+    y1, y2 = rect.top, rect.bottom
+    if vertical:
+        h = y2-y1
+    else:
+        h = x2-x1
+    if forward:
+        a, b = color, gradient
+    else:
+        b, a = color, gradient
+    rate = (
+        float(b[0]-a[0])/h,
+        float(b[1]-a[1])/h,
+        float(b[2]-a[2])/h
+    )
+    fn_line = pygame.draw.line
+    if vertical:
+        for line in range(y1, y2):
+            color = (
+                min(max(a[0]+(rate[0]*(line-y1)), 0), 255),
+                min(max(a[1]+(rate[1]*(line-y1)), 0), 255),
+                min(max(a[2]+(rate[2]*(line-y1)), 0), 255)
+            )
+            fn_line(surface, color, (x1, line), (x2, line))
+    else:
+        for col in range(x1, x2):
+            color = (
+                min(max(a[0]+(rate[0]*(col-x1)), 0), 255),
+                min(max(a[1]+(rate[1]*(col-x1)), 0), 255),
+                min(max(a[2]+(rate[2]*(col-x1)), 0), 255)
+            )
+            fn_line(surface, color, (col, y1), (col, y2))
