@@ -22,7 +22,7 @@ class BaseObj(object):
         self.isStatic = True
         self.position = Vectors(0,0)
         self.commands = None
-
+    #update object and commands
     def update(self, milliseconds):
         if not self.commands == None:
             exec self.commands
@@ -39,14 +39,15 @@ class DrawObj(BaseObj):
 
         self.scale_factor = 1
 
+    #show the object
     def show(self):
         self.isEnabled = True
         self.isVisible = True
-
+    #hide the object
     def hide(self):
         self.isEnabled = False
         self.isVisible = False
-
+    #draw the object
     def draw(self, milliseconds, surface):
         if self.isStatic:
             surface.blit(self.image, self.position + self.offset)
