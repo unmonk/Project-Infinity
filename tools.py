@@ -1,72 +1,68 @@
 __author__ = 'Scott'
-
 import pygame
-import pygame.mixer
-import sys
-import os
+import pytmx
 
 
-#load image
-def load_image(filename):
-    pathName = os.path.join('resources/images', filename)
-    image = pygame.image.load(pathName)
-    if image.get_alpha() is None:
-        image = image.convert()
-    else:
-        image = image.convert_alpha()
-    return image
+class TileLayer(object):
+    def __init__(self, index, mapObj):
+        self.index = index
+        self.tiles = pygame.sprite.Group()
+        self.mapObj = mapObj
+
+        for x in range(self.mapObj.width):
+            for y in range(self.mapObj.height):
+                img = self.mapObj.get_tile_image(x, y, self.index)
+                if img:
+                    newX = x * self.mapObj.tilewidth
+                    newY = y * self.mapObj.tileheight
+                    self.tiles.add(Tile(img, newX, newY))
+
+    def draw(self, screen):
+        self.tiles.draw(screen)
 
 
-#load audio
-def load_audio(filename):
-    pathName = os.path.join('resources/audio', filename)
-    sound = pygame.mixer.Sound(pathName)
-    return sound
+class Tile(pygame.sprite.Sprite):
+    def __init__(self, image, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
 
-#Gradient function from pygame wiki
-def fill_gradient(surface, color, gradient, rect=None, vertical=True, forward=True):
-    """fill a surface with a gradient pattern
-    Parameters:
-    color -> starting color
-    gradient -> final color
-    rect -> area to fill; default is surface's rect
-    vertical -> True=vertical; False=horizontal
-    forward -> True=forward; False=reverse
+class SpriteSheet(object):
+    def __init__(self, filename):
+        self.sheet = pygame.image.load(filename).convert()
 
-    Pygame recipe: http://www.pygame.org/wiki/GradientCode
-    """
-    if rect is None:
-        rect = surface.get_rect()
-    x1, x2 = rect.left, rect.right
-    y1, y2 = rect.top, rect.bottom
-    if vertical:
-        h = y2-y1
-    else:
-        h = x2-x1
-    if forward:
-        a, b = color, gradient
-    else:
-        b, a = color, gradient
-    rate = (
-        float(b[0]-a[0])/h,
-        float(b[1]-a[1])/h,
-        float(b[2]-a[2])/h
-    )
-    fn_line = pygame.draw.line
-    if vertical:
-        for line in range(y1, y2):
-            color = (
-                min(max(a[0]+(rate[0]*(line-y1)), 0), 255),
-                min(max(a[1]+(rate[1]*(line-y1)), 0), 255),
-                min(max(a[2]+(rate[2]*(line-y1)), 0), 255)
-            )
-            fn_line(surface, color, (x1, line), (x2, line))
-    else:
-        for col in range(x1, x2):
-            color = (
-                min(max(a[0]+(rate[0]*(col-x1)), 0), 255),
-                min(max(a[1]+(rate[1]*(col-x1)), 0), 255),
-                min(max(a[2]+(rate[2]*(col-x1)), 0), 255)
-            )
-            fn_line(surface, color, (col, y1), (col, y2))
+    def image_at(self, rect, colorkey=None):
+        newRect = pygame.Rect(rect)
+        image = pygame.Surface(newRect.size).convert()
+        image.blit(self.sheet, (0, 0), newRect)
+        if colorkey is not None:
+            if colorkey is -1:
+                colorkey = image.get_at((0, 0))
+            image.set_colorkey(colorkey, pygame.RLEACCEL)
+        return image
+
+
+class Level(object):
+    def __init__(self, filename):
+        self.mapObj = pytmx.load_pygame(filename)
+        self.layers = []
+        self.levelShift = 0
+
+        for layer in range(len(self.mapObj.layers)):
+            self.layers.append(TileLayer(layer, self.mapObj))
+
+    def shiftLevel(self, shiftX):
+        self.levelShift += shiftX
+
+        for layer in self.layers:
+            for tile in layer.tiles:
+                tile.rect.x += shiftX
+
+    def draw(self, screen):
+        for layer in self.layers:
+            layer.draw(screen)
+
+
