@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="16" tileheight="16" nextobjectid="1">
- <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16">
-  <image source="D:/Game Assets/SpriteSheets/untitled folder/twilight-tiles.png" width="256" height="256"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="70" tileheight="70" nextobjectid="1">
+ <tileset firstgid="1" name="tiles_spritesheet" tilewidth="70" tileheight="70" spacing="2">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/tiles_spritesheet.png" width="914" height="936"/>
  </tileset>
- <layer name="background" width="200" height="40">
+ <tileset firstgid="157" name="bg" tilewidth="256" tileheight="256" spacing="2">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/bg.png" width="256" height="256"/>
+ </tileset>
+ <layer name="background" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <layer name="collision" width="200" height="40">
+ <layer name="collision" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt0zsOgCAQBUCuy43E09pYEKIRkAQ/M8mryALF2xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgK9Lsz9AlVjk7nzPHX+RivAsR12OFecjUnZjVK7M7uTs9xmnp/czLKFth5YsrfuXz637+6N3GN5K5wGAMxv+uEcb
+   eJzt1LEJwDAMRUEN6gE8QBZRmW1jiDEp3QSruIPXCz4oAgAAAACgnjx9AEuGParIsEcV16jP2uFbeN0zarDHvv5T399kj30PDYcR6Q==
+  </data>
+ </layer>
+ <layer name="death" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztx7EJAAAIBLHf1v03sLESXEASuOISAAAAAAAAAL6paf8VSQOUiAQH
   </data>
  </layer>
 </map>

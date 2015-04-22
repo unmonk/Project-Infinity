@@ -13,10 +13,10 @@ class Game(object):
         self.levels.append(Level("data/level1.tmx"))
         self.currentLevel = self.levels[self.levelNumber]
 
-        self.player = Player(600, 200)
+        self.player = Player(300, 900)
         self.player.currentLevel = self.currentLevel
 
-        self.overlay = pygame.image.load("data/overlay.png")
+
 
     def keyboardManager(self):
         for event in pygame.event.get():
@@ -44,5 +44,4 @@ class Game(object):
         screen.fill(BACKGROUND_COLOR)
         self.currentLevel.draw(screen)
         self.player.draw(screen)
-        screen.blit(self.overlay, (0, 0))
         pygame.display.flip()

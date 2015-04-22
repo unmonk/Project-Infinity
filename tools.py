@@ -54,12 +54,19 @@ class Level(object):
         for layer in range(len(self.mapObj.layers)):
             self.layers.append(TileLayer(layer, self.mapObj))
 
-    def shiftLevel(self, shiftX):
+    def shiftLevelX(self, shiftX):
         self.levelShift += shiftX
 
         for layer in self.layers:
             for tile in layer.tiles:
                 tile.rect.x += shiftX
+
+    def shiftLevelY(self, shiftY):
+        self.levelShift += shiftY
+
+        for layer in self.layers:
+            for tile in layer.tiles:
+                tile.rect.y += shiftY
 
     def draw(self, screen):
         for layer in self.layers:
