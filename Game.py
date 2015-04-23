@@ -18,7 +18,6 @@ class Game(object):
         self.player.currentLevel = self.currentLevel
 
 
-
     def keyboardManager(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
