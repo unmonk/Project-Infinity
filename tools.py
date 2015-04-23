@@ -1,6 +1,6 @@
 __author__ = 'Scott'
 import pygame
-import pytmx
+from pytmx import *
 
 
 class TileLayer(object):
@@ -45,9 +45,9 @@ class SpriteSheet(object):
         return image
 
 
-class Level(object):
+class Level():
     def __init__(self, filename):
-        self.mapObj = pytmx.load_pygame(filename)
+        self.mapObj = load_pygame(filename)
         self.layers = []
         self.levelShift = 0
 

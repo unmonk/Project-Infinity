@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="20" tilewidth="70" tileheight="70" nextobjectid="1">
  <tileset firstgid="1" name="tiles_spritesheet" tilewidth="70" tileheight="70" spacing="2">
-  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/tiles_spritesheet.png" width="914" height="936"/>
+  <image source="tiles_spritesheet.png" width="914" height="936"/>
  </tileset>
  <tileset firstgid="157" name="bg" tilewidth="256" tileheight="256" spacing="2">
-  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/bg.png" width="256" height="256"/>
+  <image source="bg.png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="158" name="sheet" tilewidth="70" tileheight="70">
-  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Building pack (100 assets)/Spritesheet/sheet.png" width="980" height="490"/>
+  <image source="sheet.png" width="980" height="490"/>
  </tileset>
  <tileset firstgid="256" name="sheet2" tilewidth="70" tileheight="70">
-  <image source="D:/Game Assets/Art (7.825 files)/Tappy Plane (80 assets)/Spritesheet/sheet.png" width="1024" height="2048"/>
+  <image source="sheet2.png" width="1024" height="2048"/>
  </tileset>
  <layer name="background" width="120" height="20">
   <data encoding="base64" compression="zlib">
