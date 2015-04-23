@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="20" tilewidth="70" tileheight="70" nextobjectid="1">
+ <tileset firstgid="1" name="tiles_spritesheet" tilewidth="70" tileheight="70" spacing="2">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/tiles_spritesheet.png" width="914" height="936"/>
+ </tileset>
+ <tileset firstgid="157" name="bg" tilewidth="256" tileheight="256" spacing="2">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/bg.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="158" name="sheet" tilewidth="70" tileheight="70">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Building pack (100 assets)/Spritesheet/sheet.png" width="980" height="490"/>
+ </tileset>
+ <tileset firstgid="256" name="sheet2" tilewidth="70" tileheight="70">
+  <image source="D:/Game Assets/Art (7.825 files)/Tappy Plane (80 assets)/Spritesheet/sheet.png" width="1024" height="2048"/>
+ </tileset>
+ <layer name="background" width="120" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztU1FuxTAI4/53eHedtK+KgbETSKrpIUVVG8DGph8z+3zPb9zCscfT3PfozucpeCbWZ7VRdPSYihO8UF/F34jP7f/jP59K36cHUa4FeYr3aA+7Z0HznQyVV7fPvq9Zjunvqh4sd4TZ7fHtU824GqoeEQdL7qL3yd1EM67O2R0ds7M4O7uUPc3+9kH+3v5vJvYJxYRfXfNEnHb8RRhTs3b0eNOpdIrmZbT0PXb9zfAy3l272tn3bT6jHOSn18mSnCyf2YWoXuWK7ln/kX5Z/xveru5DNTPyF/GI+vt+q7vbpYFSu8sZcd/hzWBU2CbmMf6uzNo1z/fw/mY6+tzoXfG0Yw9YfBVvVVPET5mJDdXfqC7KjTAQXrd2zL6gWSb4ZjG9V5mPrE8+t9L1bWeS527f3ah88bmId9Un463OwWjxdt9Z/zp2q+rNYrF1EQ4KpX7Fn6yOrV/R/AQW65XHjzhm/k7s+G6PSvuuUHToxFO1zN4r/VhMdeaTO34Kq8trtS/yk/G3qpvSZsfPaoa3H1X3LB998/fP7z8CUA3p
+  </data>
+ </layer>
+ <layer name="foreground" width="120" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt1sENgkAQheFtx4NHCrBXtACwAKUAoAChD/Ti8+QFEjYZmDD5v+RdyCb7kskumxIAAEB8k3cBmGuVbia9ZymYeSnDTEbPUjBXKlfl5l0Em2C+sVVKrdy9i2ATnN/YmO/fZ8Wa9077WOF+jo3zGxvzjY37+dguC99///iT8lCeSqMUO3WCj7PTvrlvUos3LIB8X9FcJ4E=
+  </data>
+ </layer>
+ <layer name="collision" width="120" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztlkEOgCAMBHmoD9Bn+Ax/q948mCoJVHadSfZIaJnQtBRQY6sI6IFfb/DrDX69wa83+PUGv97g1xv8eoNfb/DrDX69Ufa7HpmTs6R01g5lvyc19beIGuq94Tdm1N6uszeaifiNGbm3N/eq+u2xO9z9A/x+9wYZtdWc77WTTg+1Zb7Rn/3uavQjzA==
+  </data>
+ </layer>
+ <layer name="death" width="120" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6C1Xf8Gi3EOCiYAAAAAAAAAAMBH9fwACJ4nCA==
+  </data>
+ </layer>
+ <layer name="items" width="120" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6DXsH9RY3xTSEACAAAAAAA3TDsAAADAOwuROwAa
+  </data>
+ </layer>
+ <layer name="endoflevel" width="120" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzkENACAMALH5l4kCFBBULPdpFXQGAAAAAAAAKJ06wKpbB1j16gAAuQ86CgLR
+  </data>
+ </layer>
+</map>

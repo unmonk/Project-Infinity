@@ -5,7 +5,12 @@ import pygame
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 GAME_TITLE = "Project Infinity"
-MAP_COLLISION_LAYER = 1
+MAP_COLLISION_LAYER = 2
+MAP_DEATH_LAYER = 3
+MAP_BACKGROUND_LAYER = 0
+MAP_FORGROUND_LAYER = 1
+MAP_ENDOFLEVEL_LAYER = 5
+MAP_ITEM_LAYER = 4
 BACKGROUND_COLOR = (20, 20, 20)
 
 #Main Character Licensed to Scott Weaver
@@ -21,9 +26,9 @@ IMAGE_PATH =\
         'playerFlip': [],
         'playerJump': [],
         'playerRun': [],
-        'playerSlide':[],
-        'playerStun':[],
-        'playerWallGrab':[]
+        'playerSlide': [],
+        'playerStun': [],
+        'playerWallGrab': []
 
     }
 

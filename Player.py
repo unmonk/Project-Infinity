@@ -29,10 +29,14 @@ class Player(pygame.sprite.Sprite):
             self.walkLeft.append(pygame.transform.flip(self.walkRight[i], True, False))
 
         #Jump Right Animation
-        self.jumpingRight = DATA['playerJump'][0]
+        self.jumpingRight = []
+        for i in range(0, 1):
+            self.jumpingRight.append(DATA['playerJump'][i])
 
         #Jump Left Animation
-        self.jumpingLeft = pygame.transform.flip(self.jumpingRight, True, False)
+        self.jumpingLeft = []
+        for i in range(0, 1):
+            self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[i], True, False))
 
 
 
@@ -45,7 +49,9 @@ class Player(pygame.sprite.Sprite):
 
         self.running = False
         self.runningFrame = 0
-        self.runningTime = pygame.time.get_ticks()
+        self.frameTime = pygame.time.get_ticks()
+
+        self.idleFrame = 0
 
         self.changeX = 0
         self.changeY = 0
@@ -54,15 +60,18 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.changeX
+        #collide with ground layer
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         for tile in tileCollision:
             if self.changeX > 0:
                 self.rect.right = tile.rect.left
             else:
                 self.rect.left = tile.rect.right
-        if self.rect.right >= SCREEN_WIDTH - 200:
-            difference = self.rect.right - (SCREEN_WIDTH-200)
-            self.rect.right = SCREEN_WIDTH - 200
+
+        #Moving the map with movement of character
+        if self.rect.right >= SCREEN_WIDTH - 500:
+            difference = self.rect.right - (SCREEN_WIDTH-500)
+            self.rect.right = SCREEN_WIDTH - 500
             self.currentLevel.shiftLevelX(-difference)
 
         if self.rect.left <= 200:
@@ -79,8 +88,9 @@ class Player(pygame.sprite.Sprite):
             difference = 200 - self.rect.top
             self.rect.top = 200
             self.currentLevel.shiftLevelY(difference)
-
         self.rect.y += self.changeY
+
+        #animation
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
             for tile in tileCollision:
@@ -89,19 +99,19 @@ class Player(pygame.sprite.Sprite):
                     self.changeY = 1
 
                     if self.direction == "right":
-                        self.image = self.idleRight[0]
+                        self.image = self.idleRight[self.idleFrame]
                     else:
-                        self.image = self.idleLeft[0]
+                        self.image = self.idleLeft[self.idleFrame]
                 else:
                     self.rect.top = tile.rect.bottom
                     self.changeY = 0
         else:
-            self.changeY += 0.2
+            self.changeY += .2
             if self.changeY > 0:
                 if self.direction == "right":
-                    self.image = self.jumpingRight
+                    self.image = self.jumpingRight[0]
                 else:
-                    self.image = self.jumpingLeft
+                    self.image = self.jumpingLeft[0]
 
         if self.running and self.changeY == 1:
             if self.direction == "right":
@@ -109,12 +119,14 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.image = self.walkLeft[self.runningFrame]
 
-        if pygame.time.get_ticks() - self.runningTime > 50:
-            self.runningTime = pygame.time.get_ticks()
-            if self.runningFrame == 2:
+        if pygame.time.get_ticks() - self.frameTime > 60:
+            self.frameTime = pygame.time.get_ticks()
+            if self.runningFrame == 6 or self.idleFrame == 4:
                 self.runningFrame = 0
+                self.idleFrame = 0
             else:
                 self.runningFrame += 1
+                self.idleFrame += 1
 
     def jump(self):
         self.rect.y += 40
@@ -123,9 +135,9 @@ class Player(pygame.sprite.Sprite):
 
         if len(tileCollision) > 0:
             if self.direction == "right":
-                self.image = self.jumpingRight
+                self.image = self.jumpingRight[0]
             else:
-                self.image = self.jumpingLeft
+                self.image = self.jumpingLeft[0]
 
             self.changeY = -10
 

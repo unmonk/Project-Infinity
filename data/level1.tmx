@@ -1,24 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="70" tileheight="70" nextobjectid="1">
- <tileset firstgid="1" name="tiles_spritesheet" tilewidth="70" tileheight="70" spacing="2">
-  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/tiles_spritesheet.png" width="914" height="936"/>
- </tileset>
- <tileset firstgid="157" name="bg" tilewidth="256" tileheight="256" spacing="2">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="160" height="40" tilewidth="70" tileheight="70" nextobjectid="1">
+ <tileset firstgid="1" name="bg" tilewidth="70" tileheight="70">
   <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/bg.png" width="256" height="256"/>
  </tileset>
- <layer name="background" width="100" height="20">
+ <tileset firstgid="10" name="tiles_spritesheet" tilewidth="70" tileheight="70" spacing="2">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/tiles_spritesheet.png" width="914" height="936"/>
+ </tileset>
+ <tileset firstgid="166" name="sheet" tilewidth="70" tileheight="70" spacing="2">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Request pack (100 assets)/Spritesheet/sheet.png" width="980" height="490"/>
+ </tileset>
+ <tileset firstgid="244" name="sheet" tilewidth="70" tileheight="70">
+  <image source="D:/Game Assets/Art (7.825 files)/Platformer assets (1330 assets)/Request pack (100 assets)/Spritesheet/sheet.png" width="980" height="490"/>
+ </tileset>
+ <layer name="background" width="160" height="40">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <layer name="collision" width="100" height="20">
+ <layer name="foreground" width="160" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt1LEJwDAMRUEN6gE8QBZRmW1jiDEp3QSruIPXCz4oAgAAAACgnjx9AEuGParIsEcV16jP2uFbeN0zarDHvv5T399kj30PDYcR6Q==
+   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA1wBkAAAB
   </data>
  </layer>
- <layer name="death" width="100" height="20">
+ <layer name="collision" width="160" height="40">
   <data encoding="base64" compression="zlib">
-   eJztx7EJAAAIBLHf1v03sLESXEASuOISAAAAAAAAAL6paf8VSQOUiAQH
+   eJzt2MEJgEAMBMA71ALswOYswJas1IdffXrr6QxsAYGFhJQCAAAAAAAAAEBPhlrK2DBTTU8M9GCp1wEAIO/uVnO30cJcz0CC/pGkfyTpH0n6R5L+kaR/wJf5JwPA8+xbAGjDzgXgj7ZQ1hbD8Xp7MKB/JB1Y6Tno
+  </data>
+ </layer>
+ <layer name="death" width="160" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7BKrv+rMsYggSQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/VQ8PdShGAQ==
+  </data>
+ </layer>
+ <layer name="items" width="160" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA1wBkAAAB
+  </data>
+ </layer>
+ <layer name="endoflevel" width="160" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA1wBkAAAB
   </data>
  </layer>
 </map>
