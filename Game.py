@@ -1,6 +1,7 @@
 __author__ = 'Scott'
 import pygame
 import pytmx
+import os
 import sys
 from Tools import *
 from Player import *
