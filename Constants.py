@@ -70,10 +70,12 @@ def load_images():
         DATA['playerRun'].append(pygame.image.load(IMAGE_PATH['playerRun'][i]).convert_alpha())
     for i in range(0, 3):
         DATA['playerStun'].append(pygame.image.load(IMAGE_PATH['playerStun'][i]).convert_alpha())
-    for i in range(0, 1):
-        DATA['playerJump'].append(pygame.image.load(IMAGE_PATH['playerJump'][i]).convert_alpha())
+    DATA['playerJump'].append(pygame.image.load(IMAGE_PATH['playerJump'][0]).convert_alpha())
+    DATA['playerJump'].append(pygame.image.load(IMAGE_PATH['playerJump'][1]).convert_alpha())
     DATA['playerWallGrab'].append(pygame.image.load(IMAGE_PATH['playerWallGrab'][0]).convert_alpha())
     DATA['playerSlide'].append(pygame.image.load(IMAGE_PATH['playerSlide'][0]).convert_alpha())
+
+    print(DATA['playerJump'])
 
 
 

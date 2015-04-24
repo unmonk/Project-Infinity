@@ -1,6 +1,7 @@
 __author__ = 'Scott'
 import pygame
 from pytmx import *
+from pytmx.util_pygame import load_pygame
 
 
 class TileLayer(object):

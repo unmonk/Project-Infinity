@@ -30,13 +30,13 @@ class Player(pygame.sprite.Sprite):
 
         #Jump Right Animation
         self.jumpingRight = []
-        for i in range(0, 1):
-            self.jumpingRight.append(DATA['playerJump'][i])
+        self.jumpingRight.append(DATA['playerJump'][0])
+        self.jumpingRight.append(DATA['playerJump'][1])
 
         #Jump Left Animation
         self.jumpingLeft = []
-        for i in range(0, 1):
-            self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[i], True, False))
+        self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[0], True, False))
+        self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[1], True, False))
 
 
 
@@ -106,7 +106,7 @@ class Player(pygame.sprite.Sprite):
                     self.rect.top = tile.rect.bottom
                     self.changeY = 0
         else:
-            self.changeY += .2
+            self.changeY += 1
             if self.changeY > 0:
                 if self.direction == "right":
                     self.image = self.jumpingRight[0]
@@ -129,27 +129,28 @@ class Player(pygame.sprite.Sprite):
                 self.idleFrame += 1
 
     def jump(self):
-        self.rect.y += 40
+        self.rect.y += 20
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-        self.rect.y -= 40
+        self.rect.y -= 20
 
         if len(tileCollision) > 0:
             if self.direction == "right":
-                self.image = self.jumpingRight[0]
+                self.image = self.jumpingRight[1]
             else:
-                self.image = self.jumpingLeft[0]
+                self.image = self.jumpingLeft[1]
 
-            self.changeY = -10
+
+            self.changeY = -25
 
     def goRight(self):
         self.direction = "right"
         self.running = True
-        self.changeX = 20
+        self.changeX = 15
 
     def goLeft(self):
         self.direction = "left"
         self.running = True
-        self.changeX = -20
+        self.changeX = -15
 
     def stop(self):
         self.running = False
@@ -157,13 +158,5 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-
-
-
-
-
-
-
-
 
 

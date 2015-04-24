@@ -9,7 +9,7 @@ from Constants import *
 
 class Game(object):
     def __init__(self):
-        self.levelNumber = 0
+        self.levelNumber = 1
         self.levels = []
         self.levels.append(Level("data/level0.tmx"))
         self.levels.append(Level("data/level1.tmx"))
