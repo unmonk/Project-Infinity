@@ -9,13 +9,13 @@ from Constants import *
 
 class Game(object):
     def __init__(self):
-        self.levelNumber = 1
+        self.levelNumber = 0
         self.levels = []
         self.levels.append(Level("data/level0.tmx"))
         self.levels.append(Level("data/level1.tmx"))
         self.currentLevel = self.levels[self.levelNumber]
 
-        self.player = Player(300, 900)
+        self.player = Player(300, 900, 5)
         self.player.currentLevel = self.currentLevel
 
 
@@ -28,8 +28,10 @@ class Game(object):
                     self.player.goLeft()
                 elif event.key == pygame.K_RIGHT:
                     self.player.goRight()
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_z:
                     self.player.jump()
+                elif event.key == pygame.K_x:
+                    self.player.shoot()
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and self.player.changeX < 0:
                     self.player.stop()
@@ -40,9 +42,17 @@ class Game(object):
 
     def runLogic(self):
         self.player.update()
+        if self.player.lives <= 0:
+            print "DEBUG: GAME OVER"
+            #self.gameover()
 
     def draw(self, screen):
         screen.fill(BACKGROUND_COLOR)
         self.currentLevel.draw(screen)
         self.player.draw(screen)
         pygame.display.flip()
+
+    #def gameOver(self):
+        #display game over screen
+        #return to main menu
+

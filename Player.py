@@ -3,10 +3,11 @@ import pygame
 import pytmx
 from Constants import *
 from Tools import *
+from Projectile import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, lives):
         pygame.sprite.Sprite.__init__(self)
 
         #Stand Right
@@ -38,6 +39,9 @@ class Player(pygame.sprite.Sprite):
         self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[0], True, False))
         self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[1], True, False))
 
+        #Player Slide/Wall Jump
+        self.wallAnim = DATA['playerSlide'][0]
+
 
 
         self.image = self.idleRight[0]
@@ -47,18 +51,31 @@ class Player(pygame.sprite.Sprite):
 
         self.direction = "right"
 
+        #animation frames
         self.running = False
         self.runningFrame = 0
         self.frameTime = pygame.time.get_ticks()
-
         self.idleFrame = 0
 
         self.changeX = 0
         self.changeY = 0
 
+        #What level char is on > move to game
         self.currentLevel = None
+        #lives
+        self.lives = lives
+        #player State
+        self.state = "none"
+        #firing
+        self.projectiles = []
+
 
     def update(self):
+        for k in self.projectiles:
+            k.update()
+            if k.active == False:
+                self.projectiles.remove(i)
+        self.death()
         self.rect.x += self.changeX
         #collide with ground layer
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
@@ -84,9 +101,9 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = SCREEN_HEIGHT - 70
             self.currentLevel.shiftLevelY(-difference)
 
-        if self.rect.top <= 200:
-            difference = 200 - self.rect.top
-            self.rect.top = 200
+        if self.rect.top <= 150:
+            difference = 150 - self.rect.top
+            self.rect.top = 150
             self.currentLevel.shiftLevelY(difference)
         self.rect.y += self.changeY
 
@@ -119,7 +136,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.image = self.walkLeft[self.runningFrame]
 
-        if pygame.time.get_ticks() - self.frameTime > 60:
+        if pygame.time.get_ticks() - self.frameTime > 80:
             self.frameTime = pygame.time.get_ticks()
             if self.runningFrame == 6 or self.idleFrame == 4:
                 self.runningFrame = 0
@@ -128,6 +145,10 @@ class Player(pygame.sprite.Sprite):
                 self.runningFrame += 1
                 self.idleFrame += 1
 
+
+
+
+    #ground jump
     def jump(self):
         self.rect.y += 20
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
@@ -141,6 +162,45 @@ class Player(pygame.sprite.Sprite):
 
 
             self.changeY = -25
+
+
+    #death upon collision with death layer
+    #add enemy collision
+    def death(self):
+        deathCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_DEATH_LAYER].tiles, False)
+        #enemyCollision = pygame.sprite.spritecollide(self, enemy, False)
+        if len(deathCollision) > 0:
+            self.rect.x = 0
+            self.rect.y = 0
+            self.lives -= 1
+            print "DEBUG: LIVES:", self.lives
+
+    def shoot(self):
+        gun = self.rect.x, self.rect.y
+        if (len(self.projectiles) < 5):
+            projectile = Projectile(gun, 10)
+            self.projectiles.append(projectile)
+            print "DEBUG: shot fired"
+            print self.projectiles
+
+
+
+
+
+    #wall jump + animation
+    #def wallJump(self):
+     #   tileRight = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+      #  tileLeft = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+       # while (tileLeft or tileRight) > 0:
+        #    self.onWall = True
+         #   self.wallSlide()
+
+
+    #def wallSlide(self):
+     #   if self.onWall == True:
+      #      self.image = self.wallAnim
+       #     self.changeY = -5
+
 
     def goRight(self):
         self.direction = "right"

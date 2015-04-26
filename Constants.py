@@ -12,6 +12,7 @@ MAP_FORGROUND_LAYER = 1
 MAP_ENDOFLEVEL_LAYER = 5
 MAP_ITEM_LAYER = 4
 BACKGROUND_COLOR = (20, 20, 20)
+screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 #Main Character Licensed to Scott Weaver
 
@@ -28,7 +29,8 @@ IMAGE_PATH =\
         'playerRun': [],
         'playerSlide': [],
         'playerStun': [],
-        'playerWallGrab': []
+        'playerWallGrab': [],
+        'playerProjectile': []
 
     }
 
@@ -46,6 +48,7 @@ IMAGE_PATH['playerJump'].append(os.path.join(PLAYERPATH, "jumpDown.png"))
 IMAGE_PATH['playerJump'].append(os.path.join(PLAYERPATH, "jumpUp.png"))
 IMAGE_PATH['playerWallGrab'].append(os.path.join(PLAYERPATH, "wallGrab.png"))
 IMAGE_PATH['playerSlide'].append(os.path.join(PLAYERPATH, "slideDuck.png"))
+IMAGE_PATH['playerProjectile'].append(os.path.join(PLAYERPATH, "knife.png"))
 
 DATA = \
     {
@@ -56,7 +59,8 @@ DATA = \
         'playerRun': [],
         'playerSlide':[],
         'playerStun':[],
-        'playerWallGrab':[]
+        'playerWallGrab':[],
+        'playerProjectile':[]
     }
 
 def load_images():
@@ -74,8 +78,10 @@ def load_images():
     DATA['playerJump'].append(pygame.image.load(IMAGE_PATH['playerJump'][1]).convert_alpha())
     DATA['playerWallGrab'].append(pygame.image.load(IMAGE_PATH['playerWallGrab'][0]).convert_alpha())
     DATA['playerSlide'].append(pygame.image.load(IMAGE_PATH['playerSlide'][0]).convert_alpha())
+    DATA['playerProjectile'].append(pygame.image.load(IMAGE_PATH['playerProjectile'][0]).convert_alpha())
 
-    print(DATA['playerJump'])
+
+    print "DEBUG IMAGES:", DATA
 
 
 
