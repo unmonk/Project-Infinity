@@ -9,23 +9,6 @@ from Projectile import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, lives):
         pygame.sprite.Sprite.__init__(self)
-        self.image = self.idleRight[0]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.direction = "right"
-        self.changeX = 0
-        self.changeY = 0
-        #What level char is on > move to game
-        self.currentLevel = None
-        #lives
-        self.lives = lives
-        #player State
-        self.state = "none"
-        #firing
-        self.projectiles = []
-
-
         ###############################################ANIMATION START############################################################
         #Stand Right
         self.idleRight = []
@@ -58,8 +41,23 @@ class Player(pygame.sprite.Sprite):
         self.runningFrame = 0
         self.frameTime = pygame.time.get_ticks()
         self.idleFrame = 0
-
         ####################################################END ANIMATION#############################################
+
+        self.image = self.idleRight[0]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.direction = "right"
+        self.changeX = 0
+        self.changeY = 0
+        #What level char is on > move to game
+        self.currentLevel = None
+        #lives
+        self.lives = lives
+        #player State
+        self.state = "none"
+        #firing
+        self.projectiles = []
 
 
 
@@ -202,5 +200,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        for k in self.projectiles:
+            k.display()
 
 
