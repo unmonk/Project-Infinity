@@ -79,6 +79,7 @@ def load_images():
     DATA['playerWallGrab'].append(pygame.image.load(IMAGE_PATH['playerWallGrab'][0]).convert_alpha())
     DATA['playerSlide'].append(pygame.image.load(IMAGE_PATH['playerSlide'][0]).convert_alpha())
     DATA['playerProjectile'].append(pygame.image.load(IMAGE_PATH['playerProjectile'][0]).convert_alpha())
+    DATA['playerProjectile'].append(pygame.transform.flip(DATA['playerProjectile'][0], True, False))
 
 
     print "DEBUG IMAGES:", DATA

@@ -182,8 +182,12 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self):
         gun = self.rect.x, self.rect.y+75
-        if (len(self.projectiles) < 5):
-            projectile = Projectile(gun, 50)
+
+        if (len(self.projectiles) < 1):
+            if self.direction == "right":
+                projectile = Projectile(gun, 50, "right")
+            else:
+                projectile = Projectile(gun, -50, "left")
             self.projectiles.append(projectile)
             print "DEBUG: shot fired"
             print self.projectiles

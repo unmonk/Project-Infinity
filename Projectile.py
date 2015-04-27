@@ -6,10 +6,13 @@ from Vector import *
 
 class Projectile(object):
 
-    def __init__(self, spawn, direction):
+    def __init__(self, spawn, direction, spriteDirection):
         self.spawn = Vector(spawn[0], spawn[1])
         self.speed = Vector(direction, 0)
-        self.currentWeapon = DATA['playerProjectile'][0]
+        if spriteDirection == "right":
+            self.currentWeapon = DATA['playerProjectile'][0]
+        else:
+            self.currentWeapon = DATA['playerProjectile'][1]
         self.image = self.currentWeapon
         self.imgX, self.imgY = self.image.get_size()
         self.active = True
