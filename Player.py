@@ -71,21 +71,30 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        for k in self.projectiles:
-            k.update()
-            if k.active == False:
-                self.projectiles.remove(i)
         self.death()
         self.rect.x += self.changeX
-        #collide with ground layer
-        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-        for tile in tileCollision:
-            if self.changeX > 0:
-                self.rect.right = tile.rect.left
-            else:
-                self.rect.left = tile.rect.right
+        self.handleCollision()
+        self.mapMove()
+        self.rect.y += self.changeY
+        self.jumpingCollision()
+        self.updateAnimationFrames()
 
-        #Moving the map with movement of character
+
+
+
+
+    def updateAnimationFrames(self):
+        if pygame.time.get_ticks() - self.frameTime > 80:
+            self.frameTime = pygame.time.get_ticks()
+            if self.runningFrame == 6 or self.idleFrame == 4:
+                self.runningFrame = 0
+                self.idleFrame = 0
+            else:
+                self.runningFrame += 1
+                self.idleFrame += 1
+
+
+    def mapMove(self):
         if self.rect.right >= SCREEN_WIDTH - 500:
             difference = self.rect.right - (SCREEN_WIDTH-500)
             self.rect.right = SCREEN_WIDTH - 500
@@ -105,9 +114,18 @@ class Player(pygame.sprite.Sprite):
             difference = 150 - self.rect.top
             self.rect.top = 150
             self.currentLevel.shiftLevelY(difference)
-        self.rect.y += self.changeY
 
-        #animation
+
+    def handleCollision(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+        for tile in tileCollision:
+            if self.changeX > 0:
+                self.rect.right = tile.rect.left
+            else:
+                self.rect.left = tile.rect.right
+
+
+    def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
             for tile in tileCollision:
@@ -129,22 +147,6 @@ class Player(pygame.sprite.Sprite):
                     self.image = self.jumpingRight[0]
                 else:
                     self.image = self.jumpingLeft[0]
-
-        if self.running and self.changeY == 1:
-            if self.direction == "right":
-                self.image = self.walkRight[self.runningFrame]
-            else:
-                self.image = self.walkLeft[self.runningFrame]
-
-        if pygame.time.get_ticks() - self.frameTime > 80:
-            self.frameTime = pygame.time.get_ticks()
-            if self.runningFrame == 6 or self.idleFrame == 4:
-                self.runningFrame = 0
-                self.idleFrame = 0
-            else:
-                self.runningFrame += 1
-                self.idleFrame += 1
-
 
 
 
