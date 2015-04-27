@@ -9,7 +9,7 @@ from Projectile import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, lives):
         pygame.sprite.Sprite.__init__(self)
-
+        ###############################################ANIMATION START############################################################
         #Stand Right
         self.idleRight = []
         for i in range(0, 5):
@@ -18,48 +18,38 @@ class Player(pygame.sprite.Sprite):
         self.idleLeft = []
         for i in range(0, 5):
             self.idleLeft.append(pygame.transform.flip(self.idleRight[i], True, False))
-
         #Walking Right Animation
         self.walkRight = []
         for i in range(0, 7):
             self.walkRight.append(DATA['playerRun'][i])
-
         #Walking Left Animation
         self.walkLeft = []
         for i in range(0, 7):
             self.walkLeft.append(pygame.transform.flip(self.walkRight[i], True, False))
-
         #Jump Right Animation
         self.jumpingRight = []
         self.jumpingRight.append(DATA['playerJump'][0])
         self.jumpingRight.append(DATA['playerJump'][1])
-
         #Jump Left Animation
         self.jumpingLeft = []
         self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[0], True, False))
         self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[1], True, False))
-
         #Player Slide/Wall Jump
         self.wallAnim = DATA['playerSlide'][0]
-
-
-
-        self.image = self.idleRight[0]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-
-        self.direction = "right"
-
         #animation frames
         self.running = False
         self.runningFrame = 0
         self.frameTime = pygame.time.get_ticks()
         self.idleFrame = 0
+        ####################################################END ANIMATION#############################################
 
+        self.image = self.idleRight[0]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.direction = "right"
         self.changeX = 0
         self.changeY = 0
-
         #What level char is on > move to game
         self.currentLevel = None
         #lives
@@ -70,22 +60,35 @@ class Player(pygame.sprite.Sprite):
         self.projectiles = []
 
 
+
     def update(self):
-        for k in self.projectiles:
-            k.update()
-            if k.active == False:
-                self.projectiles.remove(i)
         self.death()
         self.rect.x += self.changeX
-        #collide with ground layer
-        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-        for tile in tileCollision:
-            if self.changeX > 0:
-                self.rect.right = tile.rect.left
-            else:
-                self.rect.left = tile.rect.right
+        self.handleCollision()
+        self.mapMove()
+        self.rect.y += self.changeY
+        self.jumpingCollision()
+        self.updateAnimationFrames()
+        for k in self.projectiles:
+            k.update()
 
-        #Moving the map with movement of character
+
+
+
+
+    def updateAnimationFrames(self):
+        if pygame.time.get_ticks() - self.frameTime > 80:
+            self.frameTime = pygame.time.get_ticks()
+            if self.runningFrame == 6 or self.idleFrame == 4:
+                self.runningFrame = 0
+                self.idleFrame = 0
+            else:
+                self.runningFrame += 1
+                self.idleFrame += 1
+
+
+
+    def mapMove(self):
         if self.rect.right >= SCREEN_WIDTH - 500:
             difference = self.rect.right - (SCREEN_WIDTH-500)
             self.rect.right = SCREEN_WIDTH - 500
@@ -105,9 +108,18 @@ class Player(pygame.sprite.Sprite):
             difference = 150 - self.rect.top
             self.rect.top = 150
             self.currentLevel.shiftLevelY(difference)
-        self.rect.y += self.changeY
 
-        #animation
+
+    def handleCollision(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+        for tile in tileCollision:
+            if self.changeX > 0:
+                self.rect.right = tile.rect.left
+            else:
+                self.rect.left = tile.rect.right
+
+
+    def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
             for tile in tileCollision:
@@ -135,17 +147,6 @@ class Player(pygame.sprite.Sprite):
                 self.image = self.walkRight[self.runningFrame]
             else:
                 self.image = self.walkLeft[self.runningFrame]
-
-        if pygame.time.get_ticks() - self.frameTime > 80:
-            self.frameTime = pygame.time.get_ticks()
-            if self.runningFrame == 6 or self.idleFrame == 4:
-                self.runningFrame = 0
-                self.idleFrame = 0
-            else:
-                self.runningFrame += 1
-                self.idleFrame += 1
-
-
 
 
     #ground jump
@@ -175,31 +176,14 @@ class Player(pygame.sprite.Sprite):
             self.lives -= 1
             print "DEBUG: LIVES:", self.lives
 
+
     def shoot(self):
         gun = self.rect.x, self.rect.y
         if (len(self.projectiles) < 5):
-            projectile = Projectile(gun, 10)
+            projectile = Projectile(gun, 50)
             self.projectiles.append(projectile)
             print "DEBUG: shot fired"
             print self.projectiles
-
-
-
-
-
-    #wall jump + animation
-    #def wallJump(self):
-     #   tileRight = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-      #  tileLeft = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-       # while (tileLeft or tileRight) > 0:
-        #    self.onWall = True
-         #   self.wallSlide()
-
-
-    #def wallSlide(self):
-     #   if self.onWall == True:
-      #      self.image = self.wallAnim
-       #     self.changeY = -5
 
 
     def goRight(self):
@@ -218,5 +202,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        for k in self.projectiles:
+            k.display()
 
 

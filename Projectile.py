@@ -18,13 +18,13 @@ class Projectile(object):
     def get_rect(self):
         return pygame.Rect(self.spawn.x, self.spawn.y, self.imgX, self.imgY)
 
+    def checkBorder(self):
+        if self.spawn.x > SCREEN_WIDTH or self.spawn.x < 0 or self.spawn.y > SCREEN_HEIGHT or self.spawn.y < 0:
+            self.active = False
+
     def update(self):
         self.spawn.add(self.speed)
-        #self.checkBorder()
-
-    #def checkBorder(self):
-     #   if self.spawn.x > SCREEN_WIDTH or self.spawn.x < 0 or self.spawn.y > SCREEN_HEIGHT or self.spawn.y < 0:
-      #      self.active = False
+        self.checkBorder()
 
     def display(self):
         if self.active:
