@@ -178,7 +178,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def shoot(self):
-        gun = self.rect.x, self.rect.y
+        gun = self.rect.x, self.rect.y+75
         if (len(self.projectiles) < 5):
             projectile = Projectile(gun, 50)
             self.projectiles.append(projectile)
