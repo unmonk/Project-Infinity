@@ -71,6 +71,9 @@ class Player(pygame.sprite.Sprite):
         self.updateAnimationFrames()
         for k in self.projectiles:
             k.update()
+            if k.active == False:
+                self.projectiles.remove(k)
+
 
 
 
