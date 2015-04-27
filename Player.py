@@ -69,6 +69,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.changeY
         self.jumpingCollision()
         self.updateAnimationFrames()
+        for k in self.projectiles:
+            k.update()
 
 
 
@@ -178,7 +180,7 @@ class Player(pygame.sprite.Sprite):
     def shoot(self):
         gun = self.rect.x, self.rect.y
         if (len(self.projectiles) < 5):
-            projectile = Projectile(gun, 10)
+            projectile = Projectile(gun, 50)
             self.projectiles.append(projectile)
             print "DEBUG: shot fired"
             print self.projectiles

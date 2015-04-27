@@ -20,11 +20,11 @@ class Projectile(object):
 
     def update(self):
         self.spawn.add(self.speed)
-        #self.checkBorder()
+        self.checkBorder()
 
-    #def checkBorder(self):
-     #   if self.spawn.x > SCREEN_WIDTH or self.spawn.x < 0 or self.spawn.y > SCREEN_HEIGHT or self.spawn.y < 0:
-      #      self.active = False
+    def checkBorder(self):
+        if self.spawn.x > SCREEN_WIDTH or self.spawn.x < 0 or self.spawn.y > SCREEN_HEIGHT or self.spawn.y < 0:
+            self.active = False
 
     def display(self):
         if self.active:
