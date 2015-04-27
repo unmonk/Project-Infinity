@@ -9,57 +9,13 @@ from Projectile import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, lives):
         pygame.sprite.Sprite.__init__(self)
-
-        #Stand Right
-        self.idleRight = []
-        for i in range(0, 5):
-            self.idleRight.append(DATA['playerIdle'][i])
-        #Stand Left
-        self.idleLeft = []
-        for i in range(0, 5):
-            self.idleLeft.append(pygame.transform.flip(self.idleRight[i], True, False))
-
-        #Walking Right Animation
-        self.walkRight = []
-        for i in range(0, 7):
-            self.walkRight.append(DATA['playerRun'][i])
-
-        #Walking Left Animation
-        self.walkLeft = []
-        for i in range(0, 7):
-            self.walkLeft.append(pygame.transform.flip(self.walkRight[i], True, False))
-
-        #Jump Right Animation
-        self.jumpingRight = []
-        self.jumpingRight.append(DATA['playerJump'][0])
-        self.jumpingRight.append(DATA['playerJump'][1])
-
-        #Jump Left Animation
-        self.jumpingLeft = []
-        self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[0], True, False))
-        self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[1], True, False))
-
-        #Player Slide/Wall Jump
-        self.wallAnim = DATA['playerSlide'][0]
-
-
-
         self.image = self.idleRight[0]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-
         self.direction = "right"
-
-        #animation frames
-        self.running = False
-        self.runningFrame = 0
-        self.frameTime = pygame.time.get_ticks()
-        self.idleFrame = 0
-
         self.changeX = 0
         self.changeY = 0
-
         #What level char is on > move to game
         self.currentLevel = None
         #lives
@@ -68,6 +24,43 @@ class Player(pygame.sprite.Sprite):
         self.state = "none"
         #firing
         self.projectiles = []
+
+
+        ###############################################ANIMATION START############################################################
+        #Stand Right
+        self.idleRight = []
+        for i in range(0, 5):
+            self.idleRight.append(DATA['playerIdle'][i])
+        #Stand Left
+        self.idleLeft = []
+        for i in range(0, 5):
+            self.idleLeft.append(pygame.transform.flip(self.idleRight[i], True, False))
+        #Walking Right Animation
+        self.walkRight = []
+        for i in range(0, 7):
+            self.walkRight.append(DATA['playerRun'][i])
+        #Walking Left Animation
+        self.walkLeft = []
+        for i in range(0, 7):
+            self.walkLeft.append(pygame.transform.flip(self.walkRight[i], True, False))
+        #Jump Right Animation
+        self.jumpingRight = []
+        self.jumpingRight.append(DATA['playerJump'][0])
+        self.jumpingRight.append(DATA['playerJump'][1])
+        #Jump Left Animation
+        self.jumpingLeft = []
+        self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[0], True, False))
+        self.jumpingLeft.append(pygame.transform.flip(self.jumpingRight[1], True, False))
+        #Player Slide/Wall Jump
+        self.wallAnim = DATA['playerSlide'][0]
+        #animation frames
+        self.running = False
+        self.runningFrame = 0
+        self.frameTime = pygame.time.get_ticks()
+        self.idleFrame = 0
+
+        ####################################################END ANIMATION#############################################
+
 
 
     def update(self):
@@ -92,6 +85,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.runningFrame += 1
                 self.idleFrame += 1
+
 
 
     def mapMove(self):
@@ -148,6 +142,11 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.image = self.jumpingLeft[0]
 
+        if self.running and self.changeY == 1:
+            if self.direction == "right":
+                self.image = self.walkRight[self.runningFrame]
+            else:
+                self.image = self.walkLeft[self.runningFrame]
 
 
     #ground jump
@@ -177,6 +176,7 @@ class Player(pygame.sprite.Sprite):
             self.lives -= 1
             print "DEBUG: LIVES:", self.lives
 
+
     def shoot(self):
         gun = self.rect.x, self.rect.y
         if (len(self.projectiles) < 5):
@@ -184,24 +184,6 @@ class Player(pygame.sprite.Sprite):
             self.projectiles.append(projectile)
             print "DEBUG: shot fired"
             print self.projectiles
-
-
-
-
-
-    #wall jump + animation
-    #def wallJump(self):
-     #   tileRight = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-      #  tileLeft = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-       # while (tileLeft or tileRight) > 0:
-        #    self.onWall = True
-         #   self.wallSlide()
-
-
-    #def wallSlide(self):
-     #   if self.onWall == True:
-      #      self.image = self.wallAnim
-       #     self.changeY = -5
 
 
     def goRight(self):
