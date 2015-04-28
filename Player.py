@@ -7,7 +7,7 @@ from Projectile import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, lives):
+    def __init__(self, x, y, lives, level):
         pygame.sprite.Sprite.__init__(self)
         ###############################################ANIMATION START############################################################
         #Stand Right
@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.changeX = 0
         self.changeY = 0
         #What level char is on > move to game
-        self.currentLevel = None
+        self.currentLevel = level
         #lives
         self.lives = lives
         #player State
@@ -62,7 +62,6 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        self.death()
         self.rect.x += self.changeX
         self.handleCollision()
         self.mapMove()
@@ -73,6 +72,7 @@ class Player(pygame.sprite.Sprite):
             k.update()
             if k.active == False:
                 self.projectiles.remove(k)
+        self.death()
 
 
 
@@ -174,10 +174,12 @@ class Player(pygame.sprite.Sprite):
         deathCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_DEATH_LAYER].tiles, False)
         #enemyCollision = pygame.sprite.spritecollide(self, enemy, False)
         if len(deathCollision) > 0:
+            self.lives -= 1
             self.rect.x = 0
             self.rect.y = 0
-            self.lives -= 1
             print "DEBUG: LIVES:", self.lives
+
+
 
 
     def shoot(self):
