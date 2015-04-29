@@ -14,8 +14,8 @@ class Game(object):
         self.levels.append(Level("data/level0.tmx"))
         self.levels.append(Level("data/level1.tmx"))
         self.currentLevel = self.levels[self.levelNumber]
-        self.currentLives = 5
-        self.player = Player(300, 900, self.currentLives, self.currentLevel)
+
+        self.player = Player(300, 900, 5)
         self.player.currentLevel = self.currentLevel
 
 
@@ -55,6 +55,4 @@ class Game(object):
     #def gameOver(self):
         #display game over screen
         #return to main menu
-
-
 

@@ -7,7 +7,7 @@ from Projectile import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, lives, level):
+    def __init__(self, x, y, lives):
         pygame.sprite.Sprite.__init__(self)
         ###############################################ANIMATION START############################################################
         #Stand Right
@@ -51,17 +51,19 @@ class Player(pygame.sprite.Sprite):
         self.changeX = 0
         self.changeY = 0
         #What level char is on > move to game
-        self.currentLevel = level
+        self.currentLevel = None
         #lives
         self.lives = lives
         #player State
         self.state = "none"
         #firing
         self.projectiles = []
+        self.doublejump = 0
 
 
 
     def update(self):
+        self.death()
         self.rect.x += self.changeX
         self.handleCollision()
         self.mapMove()
@@ -72,7 +74,6 @@ class Player(pygame.sprite.Sprite):
             k.update()
             if k.active == False:
                 self.projectiles.remove(k)
-        self.death()
 
 
 
@@ -132,8 +133,10 @@ class Player(pygame.sprite.Sprite):
 
                     if self.direction == "right":
                         self.image = self.idleRight[self.idleFrame]
+                        self.doublejump = 0
                     else:
                         self.image = self.idleLeft[self.idleFrame]
+                        self.doublejump = 0
                 else:
                     self.rect.top = tile.rect.bottom
                     self.changeY = 0
@@ -148,25 +151,32 @@ class Player(pygame.sprite.Sprite):
         if self.running and self.changeY == 1:
             if self.direction == "right":
                 self.image = self.walkRight[self.runningFrame]
+                self.doublejump = 0
             else:
                 self.image = self.walkLeft[self.runningFrame]
+                self.doublejump = 0
 
 
     #ground jump
     def jump(self):
-        self.rect.y += 20
+        #self.rect.y += 20
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-        self.rect.y -= 20
-
-        if len(tileCollision) > 0:
+        #self.rect.y -= 20
+        #self.changeY = -25
+        print(self.doublejump)
+        if self.doublejump < 2:
             if self.direction == "right":
                 self.image = self.jumpingRight[1]
+                self.changeY = -25
+                self.rect.y -= 20
+                self.doublejump += 1
             else:
                 self.image = self.jumpingLeft[1]
-
-
-            self.changeY = -25
-
+                self.changeY = -25
+                self.rect.y -= 20
+                self.doublejump += 1
+        else:
+            return
 
     #death upon collision with death layer
     #add enemy collision
@@ -174,12 +184,10 @@ class Player(pygame.sprite.Sprite):
         deathCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_DEATH_LAYER].tiles, False)
         #enemyCollision = pygame.sprite.spritecollide(self, enemy, False)
         if len(deathCollision) > 0:
-            self.lives -= 1
             self.rect.x = 0
             self.rect.y = 0
+            self.lives -= 1
             print "DEBUG: LIVES:", self.lives
-
-
 
 
     def shoot(self):
