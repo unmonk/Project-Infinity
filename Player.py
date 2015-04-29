@@ -169,11 +169,19 @@ class Player(pygame.sprite.Sprite):
                 self.image = self.jumpingRight[1]
                 self.changeY = -25
                 self.rect.y -= 20
+                if self.doublejump == 0:
+                    jump1.play()
+                else:
+                    jump2.play()
                 self.doublejump += 1
             else:
                 self.image = self.jumpingLeft[1]
                 self.changeY = -25
                 self.rect.y -= 20
+                if self.doublejump == 0:
+                    jump1.play()
+                else:
+                    jump2.play()
                 self.doublejump += 1
         else:
             return
