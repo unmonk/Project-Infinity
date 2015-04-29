@@ -58,6 +58,7 @@ class Player(pygame.sprite.Sprite):
         self.state = "none"
         #firing
         self.projectiles = []
+	self.doublejump = 0
 
 
 
@@ -125,6 +126,7 @@ class Player(pygame.sprite.Sprite):
     def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
+	    self.doublejump = 0
             for tile in tileCollision:
                 if self.changeY > 0:
                     self.rect.bottom = tile.rect.top
@@ -154,16 +156,16 @@ class Player(pygame.sprite.Sprite):
 
     #ground jump
     def jump(self):
+	self.doublejump += 1	
         self.rect.y += 20
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         self.rect.y -= 20
-
-        if len(tileCollision) > 0:
+	print(self.doublejump)
+        if len(tileCollision) > 0 or self.doublejump < 2:
             if self.direction == "right":
                 self.image = self.jumpingRight[1]
             else:
                 self.image = self.jumpingLeft[1]
-
 
             self.changeY = -25
 
