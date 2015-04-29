@@ -16,11 +16,15 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 #Main Character Licensed to Scott Weaver
 
+#Platform tiles CC0
+#background music CC0
 
 #Jump Sounds Credit: dklon
 pygame.mixer.init()
 jump1 = pygame.mixer.Sound('data/audio/jump_01.wav')
 jump2 = pygame.mixer.Sound('data/audio/jump_03.wav')
+
+
 
 
 

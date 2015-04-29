@@ -7,6 +7,7 @@ from Tools import *
 from Player import *
 from Constants import *
 
+
 class Game(object):
     def __init__(self):
         self.levelNumber = 01

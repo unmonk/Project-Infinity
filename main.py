@@ -9,6 +9,8 @@ pygame.display.set_caption(GAME_TITLE)
 load_images()
 clock = pygame.time.Clock()
 game = Game()
+pygame.mixer.music.load('data/audio/randu.wav')
+pygame.mixer.music.play(-1)
 
 while True:
     game.keyboardManager()
