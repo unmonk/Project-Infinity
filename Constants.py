@@ -30,7 +30,8 @@ IMAGE_PATH =\
         'playerSlide': [],
         'playerStun': [],
         'playerWallGrab': [],
-        'playerProjectile': []
+        'playerProjectile': [],
+        'playerLives': []
 
     }
 
@@ -49,6 +50,7 @@ IMAGE_PATH['playerJump'].append(os.path.join(PLAYERPATH, "jumpUp.png"))
 IMAGE_PATH['playerWallGrab'].append(os.path.join(PLAYERPATH, "wallGrab.png"))
 IMAGE_PATH['playerSlide'].append(os.path.join(PLAYERPATH, "slideDuck.png"))
 IMAGE_PATH['playerProjectile'].append(os.path.join(PLAYERPATH, "knife.png"))
+IMAGE_PATH['playerLives'].append(os.path.join(PLAYERPATH, "heart.png"))
 
 DATA = \
     {
@@ -60,7 +62,8 @@ DATA = \
         'playerSlide':[],
         'playerStun':[],
         'playerWallGrab':[],
-        'playerProjectile':[]
+        'playerProjectile':[],
+        'playerLives': []
     }
 
 def load_images():
@@ -80,6 +83,7 @@ def load_images():
     DATA['playerSlide'].append(pygame.image.load(IMAGE_PATH['playerSlide'][0]).convert_alpha())
     DATA['playerProjectile'].append(pygame.image.load(IMAGE_PATH['playerProjectile'][0]).convert_alpha())
     DATA['playerProjectile'].append(pygame.transform.flip(DATA['playerProjectile'][0], True, False))
+    DATA['playerLives'].append(pygame.image.load(IMAGE_PATH['playerLives'][0]).convert_alpha())
 
 
     print "DEBUG IMAGES:", DATA

@@ -9,7 +9,7 @@ from Constants import *
 
 class Game(object):
     def __init__(self):
-        self.levelNumber = 0
+        self.levelNumber = 01
         self.levels = []
         self.levels.append(Level("data/level0.tmx"))
         self.levels.append(Level("data/level1.tmx"))
@@ -40,6 +40,11 @@ class Game(object):
 
         return False
 
+    def lives(self):
+        self.livesImage = DATA['playerLives'][0]
+        for i in range(0, self.player.lives):
+            screen.blit(self.livesImage, (40+(i*20), 40))
+
     def runLogic(self):
         self.player.update()
         if self.player.lives <= 0:
@@ -50,6 +55,7 @@ class Game(object):
         screen.fill(BACKGROUND_COLOR)
         self.currentLevel.draw(screen)
         self.player.draw(screen)
+        self.lives()
         pygame.display.flip()
 
     #def gameOver(self):
