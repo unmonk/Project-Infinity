@@ -58,11 +58,7 @@ class Player(pygame.sprite.Sprite):
         self.state = "none"
         #firing
         self.projectiles = []
-<<<<<<< HEAD
         self.doublejump = 0
-=======
-	self.doublejump = 0
->>>>>>> c4dcf93deb8bc230f0ade30e673b81535e2b018a
 
 
 
@@ -130,7 +126,6 @@ class Player(pygame.sprite.Sprite):
     def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
-	    self.doublejump = 0
             for tile in tileCollision:
                 if self.changeY > 0:
                     self.rect.bottom = tile.rect.top
@@ -164,21 +159,12 @@ class Player(pygame.sprite.Sprite):
 
     #ground jump
     def jump(self):
-<<<<<<< HEAD
         #self.rect.y += 20
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         #self.rect.y -= 20
         #self.changeY = -25
         print(self.doublejump)
         if self.doublejump < 2:
-=======
-	self.doublejump += 1	
-        self.rect.y += 20
-        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-        self.rect.y -= 20
-	print(self.doublejump)
-        if len(tileCollision) > 0 or self.doublejump < 2:
->>>>>>> c4dcf93deb8bc230f0ade30e673b81535e2b018a
             if self.direction == "right":
                 self.image = self.jumpingRight[1]
                 self.changeY = -25
@@ -186,17 +172,11 @@ class Player(pygame.sprite.Sprite):
                 self.doublejump += 1
             else:
                 self.image = self.jumpingLeft[1]
-<<<<<<< HEAD
                 self.changeY = -25
                 self.rect.y -= 20
                 self.doublejump += 1
         else:
             return
-=======
-
-            self.changeY = -25
-
->>>>>>> c4dcf93deb8bc230f0ade30e673b81535e2b018a
 
     #death upon collision with death layer
     #add enemy collision
@@ -241,5 +221,3 @@ class Player(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
         for k in self.projectiles:
             k.display()
-
-
