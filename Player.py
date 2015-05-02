@@ -70,6 +70,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.changeY
         self.jumpingCollision()
         self.updateAnimationFrames()
+        #print(self.currentLevel)
+        #self.exitCollision() #remove when the constant is fixed
         for k in self.projectiles:
             k.update()
             if k.active == False:
@@ -122,7 +124,12 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.rect.left = tile.rect.right
 
-
+    def exitCollision(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ENDOFLEVEL_LAYER].tiles, False)
+        for tile in tileCollision:
+            print("changed level")
+            return 1
+        return 0
     def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:

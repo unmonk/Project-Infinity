@@ -47,6 +47,10 @@ class Game(object):
             screen.blit(self.livesImage, (40+(i*20), 40))
 
     def runLogic(self):
+        value = self.player.exitCollision()
+        if value == 1:
+            self.levelNumber += 1
+            self.currentLevel = self.levels[1]
         self.player.update()
         if self.player.lives <= 0:
             print "DEBUG: GAME OVER"
@@ -58,7 +62,9 @@ class Game(object):
         self.player.draw(screen)
         self.lives()
         pygame.display.flip()
-
+        
+    def incrementLevel(self):
+        self.levelNumber += 1
     #def gameOver(self):
         #display game over screen
         #return to main menu
