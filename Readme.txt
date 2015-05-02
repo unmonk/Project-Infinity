@@ -23,7 +23,6 @@ enemies that actively hunt player
 I have graphics for these 
 
 GAME: 
-when player collides with MAP_ENDOFLEVEL_LAYER, currentLevel += 1
 
 TOOLS:
 spritesheet() can be removed, im not using anymore

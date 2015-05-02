@@ -130,6 +130,12 @@ class Player(pygame.sprite.Sprite):
             print("changed level")
             return 1
         return 0
+    def powerUp(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ITEMS_LAYER].tiles, False)
+        for tile in tileCollision:
+            print("powerup")
+            return 1
+        return 0
     def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
