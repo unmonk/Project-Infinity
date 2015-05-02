@@ -1,12 +1,14 @@
 __author__ = 'Ryan'
+import pygame
 import pytmx
 from Constants import *
 from Tools import *
-#from Projectile import *
+from Projectile import *
 
-class Enemy(object):
-	def __init__(self, x, y):
-		pygame.sprite.Sprite.__init__(self)
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, x, y, lives):
+        pygame.sprite.Sprite.__init__(self)
         ###############################################ANIMATION START############################################################
         #Stand Right
         self.idleRight = []
@@ -51,12 +53,14 @@ class Enemy(object):
         #What level char is on > move to game
         self.currentLevel = None
         #lives
-        #self.lives = lives 3 also not needed
+        self.lives = lives
         #player State
         self.state = "none"
         #firing
         self.projectiles = []
-        #self.doublejump = 0 #not needed in enemy
+        self.doublejump = 0
+
+
 
     def update(self):
         self.death()
@@ -64,11 +68,17 @@ class Enemy(object):
         self.handleCollision()
         self.mapMove()
         self.rect.y += self.changeY
+        self.jumpingCollision()
         self.updateAnimationFrames()
         for k in self.projectiles:
             k.update()
             if k.active == False:
                 self.projectiles.remove(k)
+
+
+
+
+
 
     def updateAnimationFrames(self):
         if pygame.time.get_ticks() - self.frameTime > 80:
@@ -79,6 +89,8 @@ class Enemy(object):
             else:
                 self.runningFrame += 1
                 self.idleFrame += 1
+
+
 
     def mapMove(self):
         if self.rect.right >= SCREEN_WIDTH - 500:
@@ -109,6 +121,7 @@ class Enemy(object):
                 self.rect.right = tile.rect.left
             else:
                 self.rect.left = tile.rect.right
+
 
     def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
@@ -143,14 +156,40 @@ class Enemy(object):
                 self.image = self.walkLeft[self.runningFrame]
                 self.doublejump = 0
 
+
+    #ground jump
+    def jump(self):
+        #self.rect.y += 20
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+        #self.rect.y -= 20
+        #self.changeY = -25
+        print(self.doublejump)
+        if self.doublejump < 2:
+            	if self.direction == "right":
+                	self.image = self.jumpingRight[1]
+            	else:
+                	self.image = self.jumpingLeft[1]
+        	self.changeY = -25
+        	self.rect.y -= 20
+        	if self.doublejump == 0:
+            		jump1.play()
+        	else:
+            		jump2.play()
+        	self.doublejump += 1
+        else:
+            return
+
+    #death upon collision with death layer
+    #add enemy collision
     def death(self):
         deathCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_DEATH_LAYER].tiles, False)
         #enemyCollision = pygame.sprite.spritecollide(self, enemy, False)
         if len(deathCollision) > 0:
             self.rect.x = 0
             self.rect.y = 0
-            #self.lives -= 1 #only has one live
-            #print "DEBUG: LIVES:", self.lives
+            self.lives -= 1
+            print "DEBUG: LIVES:", self.lives
+
 
     def shoot(self):
         gun = self.rect.x, self.rect.y+75
@@ -163,6 +202,7 @@ class Enemy(object):
             self.projectiles.append(projectile)
             print "DEBUG: shot fired"
             print self.projectiles
+
 
     def goRight(self):
         self.direction = "right"
@@ -181,4 +221,4 @@ class Enemy(object):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         for k in self.projectiles:
-            k.display()		
+            k.display()
