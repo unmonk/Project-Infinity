@@ -23,6 +23,7 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mixer.init()
 jump1 = pygame.mixer.Sound('data/audio/jump_01.wav')
 jump2 = pygame.mixer.Sound('data/audio/jump_03.wav')
+heart = pygame.mixer.Sound('data/audio/upshort.wav')
 
 
 

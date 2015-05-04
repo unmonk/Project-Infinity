@@ -59,6 +59,7 @@ class Player(pygame.sprite.Sprite):
         #firing
         self.projectiles = []
         self.doublejump = 0
+        self.powerupbool = False
 
 
 
@@ -69,7 +70,10 @@ class Player(pygame.sprite.Sprite):
         self.mapMove()
         self.rect.y += self.changeY
         self.jumpingCollision()
+        self.powerUp()
         self.updateAnimationFrames()
+        #print(self.currentLevel)
+        #self.exitCollision() #remove when the constant is fixed
         for k in self.projectiles:
             k.update()
             if k.active == False:
@@ -122,7 +126,22 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.rect.left = tile.rect.right
 
-
+    def exitCollision(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ENDOFLEVEL_LAYER].tiles, False)
+        for tile in tileCollision:
+            print("changed level")
+            return 1
+        return 0
+    def powerUp(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ITEM_LAYER].tiles, True)
+        for tile in tileCollision:
+            if self.powerupbool == False: #make sure player only gets one powerup     
+                print("powerup")
+                self.lives += 1
+                heart.play()
+                self.powerupbool = True
+            return 1
+        return 0
     def jumpingCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         if len(tileCollision) > 0:
@@ -217,7 +236,9 @@ class Player(pygame.sprite.Sprite):
     def stop(self):
         self.running = False
         self.changeX = 0
-
+    def levelReset(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         for k in self.projectiles:

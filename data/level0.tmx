@@ -15,6 +15,9 @@
  <tileset firstgid="354" name="invisibletile" tilewidth="70" tileheight="70">
   <image source="invisitile.png" width="70" height="70"/>
  </tileset>
+ <tileset firstgid="355" name="heart" tilewidth="46" tileheight="43">
+  <image source="ninja/heart.png" width="46" height="43"/>
+ </tileset>
  <layer name="background" width="120" height="20">
   <data encoding="base64" compression="zlib">
    eJztU1FuxTAI4/53eHedtK+KgbETSKrpIUVVG8DGph8z+3zPb9zCscfT3PfozucpeCbWZ7VRdPSYihO8UF/F34jP7f/jP59K36cHUa4FeYr3aA+7Z0HznQyVV7fPvq9Zjunvqh4sd4TZ7fHtU824GqoeEQdL7qL3yd1EM67O2R0ds7M4O7uUPc3+9kH+3v5vJvYJxYRfXfNEnHb8RRhTs3b0eNOpdIrmZbT0PXb9zfAy3l272tn3bT6jHOSn18mSnCyf2YWoXuWK7ln/kX5Z/xveru5DNTPyF/GI+vt+q7vbpYFSu8sZcd/hzWBU2CbmMf6uzNo1z/fw/mY6+tzoXfG0Yw9YfBVvVVPET5mJDdXfqC7KjTAQXrd2zL6gWSb4ZjG9V5mPrE8+t9L1bWeS527f3ah88bmId9Un463OwWjxdt9Z/zp2q+rNYrF1EQ4KpX7Fn6yOrV/R/AQW65XHjzhm/k7s+G6PSvuuUHToxFO1zN4r/VhMdeaTO34Kq8trtS/yk/G3qpvSZsfPaoa3H1X3LB998/fP7z8CUA3p
@@ -37,7 +40,7 @@
  </layer>
  <layer name="items" width="120" height="20">
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6DXsH9RY3xTSEACAAAAAAA3TDsAAADAOwuROwAa
+   eJztzsEAAAAIBLCLNX+HAAKox0awBAAAAAAA4L+u6wEAAMA2GPoAZQ==
   </data>
  </layer>
  <layer name="endoflevel" width="120" height="20">
