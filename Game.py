@@ -51,6 +51,7 @@ class Game(object):
         if value == 1:
             self.levelNumber += 1
             self.currentLevel = self.levels[1]
+            self.player.levelReset(300,900)
         #powerup = self.player.powerUp() #not currently working I dont know what the powerup tile is called
         self.player.update()
         if self.player.lives <= 0:

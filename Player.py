@@ -230,7 +230,9 @@ class Player(pygame.sprite.Sprite):
     def stop(self):
         self.running = False
         self.changeX = 0
-
+    def levelReset(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         for k in self.projectiles:
