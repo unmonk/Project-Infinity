@@ -133,12 +133,19 @@ class Player(pygame.sprite.Sprite):
             return 1
         return 0
     def powerUp(self):
+<<<<<<< HEAD
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ITEM_LAYER].tiles, True)
+=======
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ITEM_LAYER].tiles, False)
+>>>>>>> d800e85c1e956be4d4aaa698dcdba20ea663f99d
         for tile in tileCollision:
             if self.powerupbool == False: #make sure player only gets one powerup     
                 print("powerup")
                 self.lives += 1
+<<<<<<< HEAD
                 heart.play()
+=======
+>>>>>>> d800e85c1e956be4d4aaa698dcdba20ea663f99d
                 self.powerupbool = True
             return 1
         return 0
