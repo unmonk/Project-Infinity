@@ -59,6 +59,7 @@ class Player(pygame.sprite.Sprite):
         #firing
         self.projectiles = []
         self.doublejump = 0
+        self.powerupbool = False
 
 
 
@@ -69,6 +70,7 @@ class Player(pygame.sprite.Sprite):
         self.mapMove()
         self.rect.y += self.changeY
         self.jumpingCollision()
+        self.powerUp()
         self.updateAnimationFrames()
         #print(self.currentLevel)
         #self.exitCollision() #remove when the constant is fixed
@@ -131,9 +133,12 @@ class Player(pygame.sprite.Sprite):
             return 1
         return 0
     def powerUp(self):
-        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ITEMS_LAYER].tiles, False)
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ITEM_LAYER].tiles, False)
         for tile in tileCollision:
-            print("powerup")
+            if self.powerupbool == False: #make sure player only gets one powerup     
+                print("powerup")
+                self.lives += 1
+                self.powerupbool = True
             return 1
         return 0
     def jumpingCollision(self):
