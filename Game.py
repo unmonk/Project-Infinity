@@ -50,16 +50,14 @@ class Game(object):
         value = self.player.exitCollision()
         if value == 1:
             self.levelNumber += 1
-<<<<<<< HEAD
+
             newValue = self.player.lives
             self.currentLevel = self.levels[1]
             self.player = Player(300, 300, newValue)
             self.player.currentLevel = self.currentLevel
             value = 0
-=======
-            self.currentLevel = self.levels[1]
-            self.player.levelReset(300,900)
->>>>>>> d800e85c1e956be4d4aaa698dcdba20ea663f99d
+
+
         #powerup = self.player.powerUp() #not currently working I dont know what the powerup tile is called
         self.player.update()
         if self.player.lives <= 0:
