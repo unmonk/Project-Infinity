@@ -27,8 +27,7 @@ GAME:
 TOOLS:
 spritesheet() can be removed, im not using anymore
 
-POWERUPS:
-+1 lyfe
+
 
 GUI:
 Implement a main menu.
