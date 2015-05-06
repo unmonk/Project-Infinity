@@ -13,6 +13,7 @@ MAP_ENDOFLEVEL_LAYER = 5
 MAP_ITEM_LAYER = 4
 BACKGROUND_COLOR = (20, 20, 20)
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+LAST_LEVEL = 1
 
 #Main Character Licensed to Scott Weaver
 

@@ -60,7 +60,7 @@ class Game(object):
 
         #powerup = self.player.powerUp() #not currently working I dont know what the powerup tile is called
         self.player.update()
-        if self.player.lives <= 0:
+        if self.player.lives <= 0 or self.levelNumber>LAST_LEVEL:#quit if dead or player hits last level
             print "DEBUG: GAME OVER"
             
             return -1 #break from loop in main
