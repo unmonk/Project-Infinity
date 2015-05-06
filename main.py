@@ -14,7 +14,8 @@ pygame.mixer.music.play(-1)
 
 while True:
     game.keyboardManager()
-    game.runLogic()
+    if(game.runLogic() == -1):
+        break #break from loop and end game if lives are lees than 0
     game.draw(screen)
     clock.tick(60)
 

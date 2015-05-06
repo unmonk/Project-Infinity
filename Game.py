@@ -62,8 +62,9 @@ class Game(object):
         self.player.update()
         if self.player.lives <= 0:
             print "DEBUG: GAME OVER"
-            #self.gameover()
-
+            
+            return -1 #break from loop in main
+        return 0
     def draw(self, screen):
         screen.fill(BACKGROUND_COLOR)
         self.currentLevel.draw(screen)
