@@ -29,8 +29,5 @@ spritesheet() can be removed, im not using anymore
 
 
 
-GUI:
-Implement a main menu.
-
 
 
