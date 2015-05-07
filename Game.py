@@ -3,6 +3,7 @@ import pygame
 import pytmx
 import os
 import sys
+from Enemy import *
 from Tools import *
 from Player import *
 from Constants import *
@@ -15,9 +16,10 @@ class Game(object):
         self.levels.append(Level("data/level0.tmx"))
         self.levels.append(Level("data/level1.tmx"))
         self.currentLevel = self.levels[self.levelNumber]
-
         self.player = Player(300, 900, 5)
+        self.enemy1 = Enemy(300, 900, 1)
         self.player.currentLevel = self.currentLevel
+        self.enemy1.currentLevel = self.currentLevel
 
 
     def keyboardManager(self):
@@ -55,11 +57,14 @@ class Game(object):
             self.currentLevel = self.levels[1]
             self.player = Player(300, 300, newValue)
             self.player.currentLevel = self.currentLevel
+            self.enemy1.currentLevel = self.currentLevel
             value = 0
 
 
         #powerup = self.player.powerUp() #not currently working I dont know what the powerup tile is called
         self.player.update()
+        self.enemy1.update()
+        print self.enemy1.rect
         if self.player.lives <= 0 or self.levelNumber>LAST_LEVEL:#quit if dead or player hits last level
             print "DEBUG: GAME OVER"
             
@@ -69,6 +74,7 @@ class Game(object):
         screen.fill(BACKGROUND_COLOR)
         self.currentLevel.draw(screen)
         self.player.draw(screen)
+        self.enemy1.draw(screen)
         self.lives()
         pygame.display.flip()
         

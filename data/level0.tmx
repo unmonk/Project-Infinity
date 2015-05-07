@@ -30,7 +30,7 @@
  </layer>
  <layer name="collision" width="120" height="20">
   <data encoding="base64" compression="zlib">
-   eJztljEOgCAQBPGfVlT6DJ/hb9WOgiAkgHfrTLIl4ZYJhLiEEImrnKE+lkk7WWDkLC1dVfxCHvxqg19t8KsNfrXBrzb41Qa/2uBXG/xqg19tPPs97myTs09p1g/Pfh9a5u8Rb3jvht8yVrulb2/pTcRvGcvdavb16nfE3yF3D/D73RnMmK1l/ag/6foy28wz+rPfC7lDUQs=
+   eJztljEOgCAQBM9/WlnpM3yGhX9VOwqjkMDJrTPJdpDsMYGwm9k0kEjZLD+79Us6Uw+07FIyq4pfuAe/2uBXG/xqg19t8KsNfrXBrzb41Qa/2uBXm8h+1zOzcxaXyeoR2e9FSf8aiQZ+8fuF3/TtfXoT8ftMr37Tbjlrovlt8Xe4uwf4/e7+enQr2d/qTzq+dPM8oz/7PQCaYlxP
   </data>
  </layer>
  <layer name="death" width="120" height="20">
