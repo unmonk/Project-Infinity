@@ -17,7 +17,7 @@ class Game(object):
         self.levels.append(Level("data/level1.tmx"))
         self.currentLevel = self.levels[self.levelNumber]
         self.player = Player(300, 900, 5)
-        self.enemy1 = Enemy(300, 900, 1)
+        self.enemy1 = Enemy(400, 900, 1)
         self.player.currentLevel = self.currentLevel
         self.enemy1.currentLevel = self.currentLevel
 
@@ -56,6 +56,7 @@ class Game(object):
             newValue = self.player.lives
             self.currentLevel = self.levels[1]
             self.player = Player(300, 300, newValue)
+            self.enemy1 = Enemy(400, 300, 1)
             self.player.currentLevel = self.currentLevel
             self.enemy1.currentLevel = self.currentLevel
             value = 0

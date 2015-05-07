@@ -66,8 +66,17 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x += self.changeX
         #self.handleCollision()
         self.rect.y += self.changeY
+        self.updateAnimationFrames()
 
-
+    def updateAnimationFrames(self):
+        if pygame.time.get_ticks() - self.frameTime > 80:
+            self.frameTime = pygame.time.get_ticks()
+            if self.runningFrame == 6 or self.idleFrame == 4:
+                self.runningFrame = 0
+                self.idleFrame = 0
+            else:
+                self.runningFrame += 1
+                self.idleFrame += 1
 
     #def handleCollision(self):
      #   tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
@@ -79,6 +88,7 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def draw(self, screen):
+        pygame.draw.rect(screen,(0,0,0), (self.rect.x, self.rect.y, 40, 40))
         screen.blit(self.image, self.rect)
         for k in self.projectiles:
             k.display()
