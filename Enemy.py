@@ -61,8 +61,8 @@ class Enemy(pygame.sprite.Sprite):
         self.doublejump = 0
 
 
-
-    def update(self):
+    #enemy has to move relative to player try adding change of x and y from player to enemy
+    def update(self, playervx, playervy):
         self.rect.x += self.changeX
         #self.handleCollision()
         self.rect.y += self.changeY
@@ -88,7 +88,7 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def draw(self, screen):
-        pygame.draw.rect(screen,(0,0,0), (self.rect.x, self.rect.y, 40, 40))
+        #pygame.draw.rect(screen,(0,0,0), (self.rect.x, self.rect.y, 40, 40))
         screen.blit(self.image, self.rect)
         for k in self.projectiles:
             k.display()
