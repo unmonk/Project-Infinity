@@ -47,7 +47,7 @@ class GameMenu():
         self.scr_width = self.screen.get_rect().width
         self.scr_height = self.screen.get_rect().height
  
-        self.bg_color = bg_color
+        self.bg_color = (20,20,20)
         self.clock = pygame.time.Clock()
  
         self.funcs = funcs

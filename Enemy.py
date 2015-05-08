@@ -67,13 +67,14 @@ class Enemy(pygame.sprite.Sprite):
         
     #enemy has to move relative to player try adding change of x and y from player to enemy
     def update(self, playervx, playervy):
+        self.death()
         self.rect.x += self.changeX
         self.handleCollision()
         self.rect.y += self.changeY 
         self.jumpingCollision()#need gravity and vertical collisions with tiles
         self.updateAnimationFrames()
         self.lrBehavior()
-        #print(self.changeX, self.changeY)
+        print(self.changeX, self.changeY, self.rect.x, self.rect.y)
 
     def updateAnimationFrames(self):
         if pygame.time.get_ticks() - self.frameTime > 80:
@@ -121,7 +122,7 @@ class Enemy(pygame.sprite.Sprite):
     def lrBehavior(self):
         self.changeX = 1
         if self.rect.x-100 >= self.centerx or self.rect.x+100 <= self.centerx:
-            print"changed direction"
+            
             self.changeX *= -1 # for some reason not changing direction
     def handleCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
@@ -131,7 +132,14 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.rect.left = tile.rect.right
 
-
+    def death(self):
+        deathCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_DEATH_LAYER].tiles, False)
+        #enemyCollision = pygame.sprite.spritecollide(self, enemy, False)
+        if len(deathCollision) > 0:
+            self.rect.x = 0
+            self.rect.y = 0
+            self.lives -= 1
+            #print "DEBUG: LIVES:", self.lives
     def draw(self, screen):
         #pygame.draw.rect(screen,(0,0,0), (self.rect.x, self.rect.y, 40, 40))
         screen.blit(self.image, self.rect)
