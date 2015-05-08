@@ -69,6 +69,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x += self.changeX
         self.handleCollision()
         self.rect.y += self.changeY 
+        self.jumpingCollision()#need gravity and vertical collisions with tiles
         self.updateAnimationFrames()
         #print(self.changeX, self.changeY)
 
@@ -81,6 +82,39 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.runningFrame += 1
                 self.idleFrame += 1
+    def jumpingCollision(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+        if len(tileCollision) > 0:
+            for tile in tileCollision:
+                if self.changeY > 0:
+                    self.rect.bottom = tile.rect.top
+                    self.changeY = 1
+
+                    if self.direction == "right":
+                        self.image = self.idleRight[self.idleFrame]
+                        #self.doublejump = 0
+                    else:
+                        self.image = self.idleLeft[self.idleFrame]
+                        #self.doublejump = 0
+                else:
+                    self.rect.top = tile.rect.bottom
+                    self.changeY = 0
+        else:
+            self.changeY += 1
+            if self.changeY > 0:
+                if self.direction == "right":
+                    self.image = self.jumpingRight[0]
+                else:
+                    self.image = self.jumpingLeft[0]
+
+        if self.running and self.changeY == 1:
+            if self.direction == "right":
+                self.image = self.walkRight[self.runningFrame]
+                #self.doublejump = 0
+            else:
+                self.image = self.walkLeft[self.runningFrame]
+                #self.doublejump = 0
+
 
     def handleCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)

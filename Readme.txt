@@ -20,7 +20,8 @@ ENEMY:
 stationary turrents that fire at player (like bullet bill)
 enemies that move back and forth
 enemies that actively hunt player
-I have graphics for these 
+***added a basic enemy similar to the player and it doesn't fall through the platform. Unfortunately
+the enemy shoots off in the positive x direction whenever the player presses spacebar.***
 
 GAME: 
 
