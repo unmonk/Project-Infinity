@@ -60,19 +60,22 @@ class Player(pygame.sprite.Sprite):
         self.projectiles = []
         self.doublejump = 0
         self.powerupbool = False
-
-
+        self.againstWall = False#tells the enemy class that player is against wall so ignore ChangeX
 
     def update(self, enemy):
         #print self.changeY
         self.death()
         self.rect.x += self.changeX
         self.handleCollision()
-        self.mapMove(enemy)
+        self.mapMove()
         self.rect.y += self.changeY
         self.jumpingCollision()
         self.powerUp()
         self.updateAnimationFrames()
+        if(self.againstWall == True):
+            enemy.moveRelPlayer(0, self.changeY)
+        else:    
+            enemy.moveRelPlayer(self.changeX, self.changeY)
         #print(self.currentLevel)
         #self.exitCollision() #remove when the constant is fixed
         for k in self.projectiles:
@@ -97,39 +100,44 @@ class Player(pygame.sprite.Sprite):
 
 
 
-    def mapMove(self, enemy):
+    def mapMove(self):
+        movedmap = False
         if self.rect.right >= SCREEN_WIDTH - 500:
             difference = self.rect.right - (SCREEN_WIDTH-500)
             self.rect.right = SCREEN_WIDTH - 500
             self.currentLevel.shiftLevelX(-difference)
-            enemy.changeX = self.changeX
-            #enemy.moveRelPlayer(self.changeX, self.changeY)
+            movedmap = True
         elif self.rect.left <= 500:
             difference = 500 - self.rect.left
             self.rect.left = 500
             self.currentLevel.shiftLevelX(difference)
-            enemy.changeX = self.changeX
-            #enemy.moveRelPlayer(self.changeX, self.changeY)
+            movedmap = True
+           
 
         if self.rect.bottom >= SCREEN_HEIGHT - 70:
             difference = self.rect.bottom - (SCREEN_HEIGHT-70)
             self.rect.bottom = SCREEN_HEIGHT - 70
             self.currentLevel.shiftLevelY(-difference)
-            enemy.changeY = (self.changeY-1)
+            movedmap = True
+            
         elif self.rect.top <= 150:
             difference = 150 - self.rect.top
             self.rect.top = 150
             self.currentLevel.shiftLevelY(difference)
-            enemy.changeY = (self.changeY-1)
+            movedmap = True
+            
+            #supposed to move the enemy only if player triggers movement of level.
 
     def handleCollision(self):
+        self.againstWall = False #reset flag each time this function is called
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         for tile in tileCollision:
             if self.changeX > 0:
-                self.rect.right = tile.rect.left
+                self.rect.right = tile.rect.left                
             else:
                 self.rect.left = tile.rect.right
-
+            self.againstWall = True        
+                
     def exitCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_ENDOFLEVEL_LAYER].tiles, False)
         for tile in tileCollision:

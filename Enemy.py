@@ -70,7 +70,7 @@ class Enemy(pygame.sprite.Sprite):
         self.handleCollision()
         self.rect.y += self.changeY 
         self.updateAnimationFrames()
-        print(self.changeX, self.changeY)
+        #print(self.changeX, self.changeY)
 
     def updateAnimationFrames(self):
         if pygame.time.get_ticks() - self.frameTime > 80:
