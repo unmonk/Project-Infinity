@@ -60,13 +60,17 @@ class Enemy(pygame.sprite.Sprite):
         self.projectiles = []
         self.doublejump = 0
 
-
+    def moveRelPlayer(self, playervx, playervy):
+        self.rect.x -= playervx
+        self.rect.y -= (playervy - 1)#offset gravitycha
+        
     #enemy has to move relative to player try adding change of x and y from player to enemy
     def update(self, playervx, playervy):
         self.rect.x += self.changeX
-        #self.handleCollision()
-        self.rect.y += self.changeY
+        self.handleCollision()
+        self.rect.y += self.changeY 
         self.updateAnimationFrames()
+        print(self.changeX, self.changeY)
 
     def updateAnimationFrames(self):
         if pygame.time.get_ticks() - self.frameTime > 80:
@@ -78,13 +82,13 @@ class Enemy(pygame.sprite.Sprite):
                 self.runningFrame += 1
                 self.idleFrame += 1
 
-    #def handleCollision(self):
-     #   tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
-      #  for tile in tileCollision:
-       #     if self.changeX > 0:
-        #        self.rect.right = tile.rect.left
-         #   else:
-          #      self.rect.left = tile.rect.right
+    def handleCollision(self):
+        tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
+        for tile in tileCollision:
+            if self.changeX > 0:
+                self.rect.right = tile.rect.left
+            else:
+                self.rect.left = tile.rect.right
 
 
     def draw(self, screen):

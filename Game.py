@@ -16,8 +16,8 @@ class Game(object):
         self.levels.append(Level("data/level0.tmx"))
         self.levels.append(Level("data/level1.tmx"))
         self.currentLevel = self.levels[self.levelNumber]
-        self.player = Player(300, 900, 5)
-        self.enemy1 = Enemy(400, 900, 1)
+        self.player = Player(300, 500, 5)
+        self.enemy1 = Enemy(400, 500, 1)
         self.player.currentLevel = self.currentLevel
         self.enemy1.currentLevel = self.currentLevel
 
@@ -61,11 +61,10 @@ class Game(object):
             self.enemy1.currentLevel = self.currentLevel
             value = 0
 
-
         #powerup = self.player.powerUp() #not currently working I dont know what the powerup tile is called
-        self.player.update()
+        self.player.update(self.enemy1)
         self.enemy1.update(self.player.changeX, self.player.changeY)
-        print self.enemy1.rect
+        #print self.enemy1.rect
         if self.player.lives <= 0 or self.levelNumber>LAST_LEVEL:#quit if dead or player hits last level
             print "DEBUG: GAME OVER"
             

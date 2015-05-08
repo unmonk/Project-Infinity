@@ -63,11 +63,12 @@ class Player(pygame.sprite.Sprite):
 
 
 
-    def update(self):
+    def update(self, enemy):
+        #print self.changeY
         self.death()
         self.rect.x += self.changeX
         self.handleCollision()
-        self.mapMove()
+        self.mapMove(enemy)
         self.rect.y += self.changeY
         self.jumpingCollision()
         self.powerUp()
@@ -96,27 +97,30 @@ class Player(pygame.sprite.Sprite):
 
 
 
-    def mapMove(self):
+    def mapMove(self, enemy):
         if self.rect.right >= SCREEN_WIDTH - 500:
             difference = self.rect.right - (SCREEN_WIDTH-500)
             self.rect.right = SCREEN_WIDTH - 500
             self.currentLevel.shiftLevelX(-difference)
-
-        if self.rect.left <= 200:
-            difference = 200 - self.rect.left
-            self.rect.left = 200
+            enemy.changeX = self.changeX
+            #enemy.moveRelPlayer(self.changeX, self.changeY)
+        elif self.rect.left <= 500:
+            difference = 500 - self.rect.left
+            self.rect.left = 500
             self.currentLevel.shiftLevelX(difference)
+            enemy.changeX = self.changeX
+            #enemy.moveRelPlayer(self.changeX, self.changeY)
 
         if self.rect.bottom >= SCREEN_HEIGHT - 70:
             difference = self.rect.bottom - (SCREEN_HEIGHT-70)
             self.rect.bottom = SCREEN_HEIGHT - 70
             self.currentLevel.shiftLevelY(-difference)
-
-        if self.rect.top <= 150:
+            enemy.changeY = (self.changeY-1)
+        elif self.rect.top <= 150:
             difference = 150 - self.rect.top
             self.rect.top = 150
             self.currentLevel.shiftLevelY(difference)
-
+            enemy.changeY = (self.changeY-1)
 
     def handleCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
