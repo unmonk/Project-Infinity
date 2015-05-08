@@ -59,6 +59,7 @@ class Enemy(pygame.sprite.Sprite):
         #firing
         self.projectiles = []
         self.doublejump = 0
+        self.centerx = self.rect.x
 
     def moveRelPlayer(self, playervx, playervy):
         self.rect.x -= playervx
@@ -71,6 +72,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y += self.changeY 
         self.jumpingCollision()#need gravity and vertical collisions with tiles
         self.updateAnimationFrames()
+        self.lrBehavior()
         #print(self.changeX, self.changeY)
 
     def updateAnimationFrames(self):
@@ -114,8 +116,13 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.image = self.walkLeft[self.runningFrame]
                 #self.doublejump = 0
-
-
+    
+    #a simple left right walking behavior moves 100 pixels left and right
+    def lrBehavior(self):
+        self.changeX = 1
+        if self.rect.x-100 >= self.centerx or self.rect.x+100 <= self.centerx:
+            print"changed direction"
+            self.changeX *= -1 # for some reason not changing direction
     def handleCollision(self):
         tileCollision = pygame.sprite.spritecollide(self, self.currentLevel.layers[MAP_COLLISION_LAYER].tiles, False)
         for tile in tileCollision:
