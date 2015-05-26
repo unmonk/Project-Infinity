@@ -1,3 +1,15 @@
+//* Project Will Not Advance Further *\\
+//* Creative Commons License Zer0 Execpt for Ninja sprite *\\
+//* CC0 *\\
+//* Ninja Sprite Licensed to Scott Weaver *\\
+
+
+
+To play, run main.py
+Requires: python 2.7
+
+
+
 Milestone 2:
 scott Weaver, Ryan Sample
 
